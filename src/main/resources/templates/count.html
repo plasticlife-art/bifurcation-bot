@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+
+    <!-- Basic Page Needs
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8">
+    <title>User count</title>
+    <meta content="" name="description">
+    <meta content="" name="author">
+
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" th:href="@{/normalize.css}"/>
+    <link rel="stylesheet" th:href="@{/skeleton.css}"/>
+
+
+    <!-- Favicon
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="images/favicon.png" rel="icon" type="image/png">
+
+</head>
+<body>
+
+<!-- Primary Page Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<!-- .container is main centered wrapper -->
+<div class="container">
+    <div class="row">
+        <div class="two columns"></div>
+        <div align="center" class="eight columns">
+            <h1 align="center">User count: [[${count}]]</h1>
+
+            <table class="u-full-width">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Created</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}">Onions</td>
+                    <td th:text="${user.username}">2.41</td>
+                    <td th:text="${#dates.formatISO(user.create_ts)}">2021-02-26T15:00:02.666+04:00</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="two columns"></div>
+    </div>
+</div>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>
