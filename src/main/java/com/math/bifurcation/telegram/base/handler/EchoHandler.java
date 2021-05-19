@@ -2,12 +2,14 @@ package com.math.bifurcation.telegram.base.handler;
 
 import com.math.bifurcation.telegram.base.UpdateWrapper;
 import org.springframework.context.MessageSource;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 /**
  * @author Leonid Cheremshantsev
  */
 
+@Order
 @Service
 public class EchoHandler extends Handler {
 

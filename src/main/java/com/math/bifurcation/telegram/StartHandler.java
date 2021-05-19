@@ -5,11 +5,14 @@ import com.math.bifurcation.data.user.UserRepository;
 import com.math.bifurcation.telegram.base.UpdateWrapper;
 import com.math.bifurcation.telegram.base.handler.Handler;
 import org.springframework.context.MessageSource;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Date;
 
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @Service
 public class StartHandler extends Handler {
 

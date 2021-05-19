@@ -26,7 +26,7 @@ public class UserRepository {
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_USERNAME = "username";
     public static final String COLUMN_CREATE_TS = "create_ts";
-    public static final String COLUMN_USERS = "users";
+    public static final String TABLE_NAME = "users";
 
     private final Logger log = LoggerFactory.getLogger(TelegramBot.class);
     private final NamedParameterJdbcTemplate jdbcTemplate;
@@ -34,7 +34,7 @@ public class UserRepository {
     public UserRepository(NamedParameterJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         String sql = String.format("CREATE TABLE IF NOT EXISTS %s (%s INTEGER, %s VARCHAR(100), %s INTEGER)",
-                COLUMN_USERS,
+                TABLE_NAME,
                 COLUMN_ID,
                 COLUMN_USERNAME,
                 COLUMN_CREATE_TS);
@@ -45,7 +45,8 @@ public class UserRepository {
 
     public Set<User> findAll() {
         log.debug("UserRepository.findAll()");
-        return new HashSet<>(jdbcTemplate.query("SELECT * FROM " + COLUMN_USERS, (resultSet, rowNum) -> convert(resultSet)));
+        return new HashSet<>(jdbcTemplate.query("SELECT * FROM " + TABLE_NAME,
+                (resultSet, rowNum) -> convert(resultSet)));
     }
 
     private User convert(ResultSet resultSet) throws SQLException {
@@ -69,7 +70,7 @@ public class UserRepository {
         params.put(COLUMN_USERNAME, user.getUsername());
         params.put(COLUMN_CREATE_TS, user.getCreate_ts().getTime());
 
-        jdbcTemplate.update("INSERT INTO " + COLUMN_USERS +
+        jdbcTemplate.update("INSERT INTO " + TABLE_NAME +
                         " VALUES (:" + COLUMN_ID + ", " +
                         ":" + COLUMN_USERNAME + ", " +
                         ":" + COLUMN_CREATE_TS + ")",
@@ -86,7 +87,7 @@ public class UserRepository {
         SqlParameterSource namedParameters = new MapSqlParameterSource().addValue(COLUMN_ID, id);
 
         try {
-            return jdbcTemplate.queryForObject("SELECT * FROM " + COLUMN_USERS +
+            return jdbcTemplate.queryForObject("SELECT * FROM " + TABLE_NAME +
                             " WHERE " + COLUMN_ID + " = :" + COLUMN_ID,
                     namedParameters, (rs, rowNum) -> convert(rs));
         } catch (EmptyResultDataAccessException e) { //if not found

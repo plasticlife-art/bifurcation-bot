@@ -57,6 +57,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         for (Handler handler : handlers) {
             if (handler.support(update)) {
                 handler.handle(update);
+                return;
             }
         }
     }

@@ -2,12 +2,15 @@ package com.math.bifurcation.telegram.base.handler;
 
 import com.math.bifurcation.telegram.base.UpdateWrapper;
 import org.springframework.context.MessageSource;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
 import java.util.concurrent.ScheduledExecutorService;
 
 
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @Service
 public class KarmaHandler extends Handler {
 

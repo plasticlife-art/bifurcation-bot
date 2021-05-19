@@ -25,7 +25,7 @@ public class UpdateWrapper {
     }
 
     public boolean isCommand(String command) {
-        return getText().equals(command);
+        return hasTextMessage() && getText().equals(command);
     }
 
     public String getText() {

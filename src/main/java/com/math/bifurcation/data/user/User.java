@@ -24,6 +24,14 @@ public class User implements Serializable {
         return String.valueOf(id);
     }
 
+    public boolean equalsById(String id) {
+        return getChatId().equals(id);
+    }
+
+    public boolean equalsById(Long id) {
+        return this.id.equals(id);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,5 +1,6 @@
 package com.math.bifurcation;
 
+import com.math.bifurcation.config.BeansConfig;
 import com.math.bifurcation.data.user.UserRepository;
 import com.math.bifurcation.telegram.TelegramBot;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.boot.context.metrics.buffering.BufferingApplicationSt
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -21,6 +23,7 @@ import javax.sql.DataSource;
 import java.util.Objects;
 
 @SpringBootApplication
+@Import(BeansConfig.class)
 public class BifurcationBotApplication {
 
 	@Autowired
