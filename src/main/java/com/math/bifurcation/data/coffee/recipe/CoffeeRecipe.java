@@ -1,11 +1,11 @@
-package com.math.bifurcation.data.coffee;
+package com.math.bifurcation.data.coffee.recipe;
 
-import com.math.bifurcation.data.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author Leonid Cheremshantsev
@@ -15,12 +15,12 @@ import java.util.Date;
 public class CoffeeRecipe {
 
     @Getter
-    private final User owner;
+    private final Long owner_user_id;
     @Getter
     private final Date create_ts;
     @Getter
     @Setter
-    private Long id;
+    private UUID id;
     @Getter
     @Setter
     private String name;

@@ -1,4 +1,4 @@
-package com.math.bifurcation;
+package com.math.bifurcation.health;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.math.bifurcation;
+package com.math.bifurcation.health;
 
 import com.math.bifurcation.data.user.UserRepository;
 import org.springframework.boot.actuate.health.Health;

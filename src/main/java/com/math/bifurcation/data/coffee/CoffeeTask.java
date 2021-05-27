@@ -103,6 +103,7 @@ public class CoffeeTask {
         usedWater += waterPart;
 
         if (time >= PURING_TIME) {
+            usedWater = water;
             state = WAITING_FOR_END;
         }
     }

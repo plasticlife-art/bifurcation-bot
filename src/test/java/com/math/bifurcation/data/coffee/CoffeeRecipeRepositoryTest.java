@@ -1,7 +1,8 @@
-package com.math.bifurcation.data.user;
+package com.math.bifurcation.data.coffee;
 
 import com.math.bifurcation.BifurcationBotApplication;
 import com.math.bifurcation.config.BeansConfig;
+import com.math.bifurcation.data.coffee.recipe.CoffeeRecipeRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +14,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {BeansConfig.class, BifurcationBotApplication.class})
-public class UserRepositoryTest {
+public class CoffeeRecipeRepositoryTest {
 
     @Autowired
-    private UserRepository userRepository;
+    private CoffeeRecipeRepository coffeeRecipeRepository;
 
     @Test
     public void getCount() {
-        userRepository.getCount();
+        coffeeRecipeRepository.getCount();
     }
-
 }

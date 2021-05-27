@@ -1,4 +1,4 @@
-package com.math.bifurcation;
+package com.math.bifurcation.health;
 
 import org.springframework.boot.actuate.system.DiskSpaceHealthIndicator;
 import org.springframework.util.unit.DataSize;

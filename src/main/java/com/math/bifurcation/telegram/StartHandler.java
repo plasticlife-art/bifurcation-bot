@@ -9,7 +9,6 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.Date;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -28,11 +27,11 @@ public class StartHandler extends Handler {
     }
 
     @Override
-    public void handle(UpdateWrapper update) throws IOException {
+    public void handle(UpdateWrapper update) {
         saveUser(update);
     }
 
-    private void saveUser(UpdateWrapper update) throws IOException {
+    private void saveUser(UpdateWrapper update) {
         userRepository.add(buildUser(update));
         sendHello(update);
     }

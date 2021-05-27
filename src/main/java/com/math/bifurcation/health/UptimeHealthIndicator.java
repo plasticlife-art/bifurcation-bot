@@ -1,5 +1,6 @@
-package com.math.bifurcation;
+package com.math.bifurcation.health;
 
+import com.math.bifurcation.App;
 import org.springframework.boot.actuate.health.Health;
 
 /**

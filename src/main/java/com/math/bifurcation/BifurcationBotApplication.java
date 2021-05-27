@@ -2,6 +2,10 @@ package com.math.bifurcation;
 
 import com.math.bifurcation.config.BeansConfig;
 import com.math.bifurcation.data.user.UserRepository;
+import com.math.bifurcation.health.DbHealthIndicator;
+import com.math.bifurcation.health.DiskHealthIndicator;
+import com.math.bifurcation.health.MemoryHealthIndicator;
+import com.math.bifurcation.health.UptimeHealthIndicator;
 import com.math.bifurcation.telegram.TelegramBot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
