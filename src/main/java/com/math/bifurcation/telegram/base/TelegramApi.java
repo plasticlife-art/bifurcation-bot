@@ -7,6 +7,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendSticker;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
@@ -17,6 +18,8 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Leonid Cheremshantsev
@@ -25,6 +28,8 @@ public class TelegramApi {
 
     private final Logger log = LoggerFactory.getLogger(TelegramApi.class);
     private final TelegramLongPollingBot bot;
+
+    private final Map<String, String> cache = new HashMap<>();
 
 
     public TelegramApi(TelegramLongPollingBot bot) {
@@ -81,22 +86,62 @@ public class TelegramApi {
     }
 
     public void sendCountDown(String chatId) {
-        try {
-            SendDocument sendDocument = new SendDocument(chatId, new InputFile("CgACAgIAAxkBAAIapmBFR6QB3ZT5wMzEsp4ja3pexPTDAAJ2DQACTdgpSvk32b6nG-OTHgQ"));
+        sendDocument(chatId, "static/stopwatch.gif");
+    }
 
-            bot.execute(sendDocument);
+    public void sendDocument(String chatId, String path) {
+        try {
+            SendDocument sendDocument;
+
+            if (isCached(path)) {
+                sendDocument = new SendDocument(chatId, new InputFile(cache.get(path)));
+            } else {
+                sendDocument = new SendDocument(chatId, getFile(path));
+            }
+
+            Message message = bot.execute(sendDocument);
+            if (!isCached(path)) {
+                String fileId = message.getDocument().getFileId();
+                cache(path, fileId);
+            }
+        } catch (URISyntaxException e) {
+            log.error("Can't get document '{}' file from resources", path);
         } catch (TelegramApiException e) {
-            log.error("Error while sending message", e);
+            log.error("Error while sending document");
         }
     }
 
-    public void sendCoffeeSticker(String chatId) {
-        try {
-            SendSticker sendSticker = new SendSticker(chatId, new InputFile("CAACAgIAAxkBAAIawWBFSWp7uH2h32xxyWZMkwZo8zXNAAKADQACTdgpSiFLgd5kx82NHgQ"));
+    private void cache(String path, String fileId) {
+        cache.put(path, fileId);
+    }
 
-            bot.execute(sendSticker);
+    private boolean isCached(String path) {
+        return cache.containsKey(path);
+    }
+
+    public void sendCoffeeSticker(String chatId) {
+        sendSticker(chatId, "static/sticker.webp");
+    }
+
+    public void sendSticker(String chatId, String path) {
+        try {
+            SendSticker sendSticker;
+
+            if (isCached(path)) {
+                sendSticker = new SendSticker(chatId, new InputFile(cache.get(path)));
+            } else {
+                sendSticker = new SendSticker(chatId, getFile(path));
+            }
+
+            Message message = bot.execute(sendSticker);
+            if (!isCached(path)) {
+                String fileId = message.getSticker().getFileId();
+                cache(path, fileId);
+            }
+        } catch (URISyntaxException e) {
+            log.error("Can't get document '{}' file from resources", path);
         } catch (TelegramApiException e) {
-            log.error("Error while sending message", e);
+            log.error("Error while sending document");
         }
     }
 
@@ -105,10 +150,6 @@ public class TelegramApi {
         if (resource == null) {
             throw new IllegalArgumentException("file not found!");
         } else {
-
-            // failed if files have whitespaces or special characters
-            //return new File(resource.getFile());
-            new InputFile("name");
             return new InputFile(new File(resource.toURI()));
         }
     }

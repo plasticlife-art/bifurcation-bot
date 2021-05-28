@@ -12,6 +12,8 @@ import java.util.LinkedList;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Predicate;
 
+import static java.lang.String.format;
+
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @Service
@@ -70,7 +72,7 @@ public class CoffeeHandler extends Handler {
 
                 askForStart(update);
             } else if (task.isWaitingForStart()) {
-                RemoveKeyboard(task);
+                removeKeyboard(task);
                 startTask(task);
             } else if (task.isStarted()) {
                 sendCurrentTaskMessage(task);
@@ -81,7 +83,7 @@ public class CoffeeHandler extends Handler {
         }
     }
 
-    private void RemoveKeyboard(CoffeeTask task) {
+    private void removeKeyboard(CoffeeTask task) {
         api.sendRemoveKeyboard(task.getUser().getChatId(), "Begin...");
     }
 
@@ -90,8 +92,7 @@ public class CoffeeHandler extends Handler {
         Integer water = task.getWater();
         Integer grains = task.getGrains();
 
-        api.sendTextMessage(chatId, String.format("Water: %s ml", water));
-        api.sendTextMessage(chatId, String.format("Сoffee beans: %s g", grains));
+        api.sendTextMessage(chatId, format(getMessage("handler.coffee.neededIngredients"), water, grains));
     }
 
     private void askForStart(UpdateWrapper update) {

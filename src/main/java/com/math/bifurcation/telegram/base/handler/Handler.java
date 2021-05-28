@@ -45,6 +45,7 @@ public abstract class Handler {
         TimeUnit.SECONDS.sleep(seconds);
     }
 
+    //todo use spring method args instead of String.format
     protected String getMessage(String key) {
         return messages.getMessage(key, null, Locale.US);
     }

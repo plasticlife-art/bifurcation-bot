@@ -54,8 +54,6 @@ public class WeatherHandler extends Handler {
         return String.format(getMessage("handler.weather.pattern"),
                 currentWeather.temp,
                 currentWeather.feelsLike,
-                currentWeather.tempMin,
-                currentWeather.tempMax,
                 currentWeather.pressure,
                 currentWeather.humidity);
     }
