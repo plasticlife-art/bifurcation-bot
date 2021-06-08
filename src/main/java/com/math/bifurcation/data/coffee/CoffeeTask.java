@@ -13,6 +13,8 @@ import static com.math.bifurcation.data.coffee.UserState.*;
 public class CoffeeTask {
 
     public static final int PURING_TIME = (int) (2.5 * 60);
+    public static final int PARTS_COUNT = 5;
+
     @Getter
     private final User user;
     @Getter
@@ -52,18 +54,22 @@ public class CoffeeTask {
         Preconditions.checkNotNull(water);
         grains = water / coefWaterCoffee;
 
-        this.water += grains * 2;
+        this.water += getFloweringWater();
 
         lastTime = 0;
         time = getFloweringTime();
 
         puringTime = PURING_TIME - time;
-        puringTimePart = puringTime / 3;
+        puringTimePart = puringTime / PARTS_COUNT;
 
-        usedWater = grains * 2;
-        waterPart = (this.water - usedWater) / 3;
+        usedWater = getFloweringWater();
+        waterPart = (this.water - usedWater) / PARTS_COUNT;
 
         state = WAITING_FOR_START;
+    }
+
+    private int getFloweringWater() {
+        return grains * 2;
     }
 
     public int getFloweringTime() {
@@ -91,10 +97,12 @@ public class CoffeeTask {
     }
 
     public String getMessage() {
-        return String.format("%s - %s, use water: %d ml",
+        return String.format("%s - %s (+%s sec), use water: %d ml (+%s ml)",
                 getPeriodStartTime(),
                 getPeriodEndTime(),
-                usedWater);
+                time <= getFloweringTime() ? getFloweringTime() : puringTimePart,
+                usedWater,
+                time <= getFloweringTime() ? getFloweringWater() : waterPart);
     }
 
     public void pourWater() {

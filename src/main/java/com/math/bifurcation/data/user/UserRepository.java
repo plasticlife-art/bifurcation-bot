@@ -45,7 +45,7 @@ public class UserRepository {
 
     public Set<User> findAll() {
         log.debug("UserRepository.findAll()");
-        return new HashSet<>(jdbcTemplate.query("SELECT * FROM " + TABLE_NAME,
+        return new HashSet<>(jdbcTemplate.query("SELECT * FROM " + TABLE_NAME + " order by " + COLUMN_CREATE_TS,
                 (resultSet, rowNum) -> convert(resultSet)));
     }
 
